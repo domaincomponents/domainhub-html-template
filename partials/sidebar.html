@@ -41,10 +41,10 @@
           <!--Without tags in sidebar-->
           {% for channelName, channel in asyncapi.channels() %}
             <li>
-              {% if channel.publish() %}
-                <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-publish-{{ channelName }}">
-                  <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Publish">
-                    Pub
+              {% if channel.hasPublish() %}
+                <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-command-{{ channelName }}">
+                  <span class="bg-blue-dark font-bold h-6 no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Command">
+                    Cmd
                   </span>
                   {% if channel.publish().summary() %}
                     <span style="padding-top: 2px;">
@@ -58,10 +58,10 @@
                 </a>
               {% endif %}
 
-              {% if channel.subscribe() %}
-                <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-subscribe-{{ channelName }}">
-                  <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Subscribe">
-                    Sub
+              {% if channel.hasSubscribe() %}
+                <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-event-{{ channelName }}">
+                  <span class="bg-green-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Event">
+                    Evnt
                   </span>
                   {% if channel.subscribe().summary() %}
                     <span style="padding-top: 2px;">
@@ -74,8 +74,26 @@
                   {% endif %}
                 </a>
               {% endif %}
+
+              {% if channel.hasPublish() %}
+              <a class="js-menu-item flex break-words no-underline text-grey-darkest mt-8 sm:mt-8 md:mt-3" href="#operation-query-{{ channelName }}">
+                  <span class="bg-purple-dark font-bold no-underline text-white uppercase p-1 mr-2 rounded" style="height: 21px;font-size: 11px;" title="Query">
+                    Qry
+                  </span>
+                {% if channel.subscribe().summary() %}
+                <span style="padding-top: 2px;">
+                      {{ channel.subscribe().summary() }}
+                    </span>
+                {% else %}
+                <div style="display:inline-block;">
+                  {{ slicedString(channelName, 'padding-top: 2px;') }}
+                </div>
+                {% endif %}
+              </a>
+              {% endif %}
               </a>
             </li>
+
           {% endfor %}
         {% endif %}
       </ul>
